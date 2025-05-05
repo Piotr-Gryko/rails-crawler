@@ -1,0 +1,19 @@
+<h1>Dungeon Crawler</h1>
+<% if @current_room %>
+  <img src="<%= @current_room.send("#{@player.direction}_image") %>" alt="Current Room">
+<% else %>
+  <p>You are in an uncharted territory!</p>
+<% end %>
+
+<div>
+  <form action="/move" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <button type="submit" name="direction" value="forward">Move Forward</button>
+    <button type="submit" name="direction" value="backward">Move Backward</button>
+  </form>
+  <form action="/turn" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <button type="submit" name="direction" value="left">Turn Left</button>
+    <button type="submit" name="direction" value="right">Turn Right</button>
+  </form>
+</div>
