@@ -1,14 +1,21 @@
 class GameController < ApplicationController
   def index
-    @player = Player.first_or_create(x: 0, y: 0, direction: "north")
-    @current_room = Room.find_by(x: @player.x, y: @player.y)
+    @player = Player.first_or_create(x: 1, y: 1, direction: 'north')
+
+    room_id = Player::DUNGEON_LAYOUT[@player.y][@player.x]
+    
+    if room_id > 0
+      @current_room = Room.find_by(id: room_id)
+    else
+      @current_room = nil # No room exists at this position
+    end
   end
 
   def move
     @player = Player.first
-    if params[:direction] == "forward"
+    if params[:direction] == 'forward'
       @player.move_forward
-    elsif params[:direction] == "backward"
+    elsif params[:direction] == 'backward'
       @player.move_backward
     end
     @player.save
@@ -17,9 +24,9 @@ class GameController < ApplicationController
 
   def turn
     @player = Player.first
-    if params[:direction] == "left"
+    if params[:direction] == 'left'
       @player.turn_left
-    elsif params[:direction] == "right"
+    elsif params[:direction] == 'right'
       @player.turn_right
     end
     @player.save

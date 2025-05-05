@@ -8,3 +8,8 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+ .container {
+    margin: auto;
+    text-align: center;
+ }
