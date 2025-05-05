@@ -84,3 +84,10 @@ production:
   username: rails_crawler
   password: <%= ENV["DATABASE_PASSWORD"] %>
   url: <%= ENV['DATABASE_URL'] %>
+
+queue:
+  <<: *default
+  database: rails_crawler_production
+  username: rails_crawler
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
