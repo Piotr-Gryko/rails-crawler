@@ -1,6 +1,6 @@
 
 <% if user_signed_in? %>
-  <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+  <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
     <div class="container">
     <h1>Dungeon Crawler</h1>
     <p>Player is facing <%= @player.direction %></p>
