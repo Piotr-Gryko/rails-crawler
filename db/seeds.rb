@@ -8,7 +8,15 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Room.create(x: 1, y: 1, north_image: 'north_0_0.jpg', south_image: 'south_0_0.jpg',
-            east_image: 'east_0_0.jpg', west_image: 'west_0_0.jpg')
-Room.create(x: 1, y: 2, north_image: 'north_0_1.jpg', south_image: 'south_0_1.jpg',
-            east_image: 'east_0_1.jpg', west_image: 'west_0_1.jpg')
+Room.find_or_create_by!(x: 1, y: 1) do |r|
+  r.north_image = "1_north.jpg"
+  r.south_image = "1_south.jpg"
+  r.east_image = "1_east.jpg"
+  r.west_image = "1_west.jpg"
+end
+Room.find_or_create_by!(x: 1, y: 2) do |r|
+  r.north_image = "2_north.jpg"
+  r.south_image = "2_south.jpg"
+  r.east_image = "2_east.jpg"
+  r.west_image = "2_west.jpg"
+end
