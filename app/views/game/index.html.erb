@@ -7,7 +7,7 @@
     <p>Player is in room <%= @current_room.id %></p>
     <p>The image should be <%= "#{@player.direction}_image" %></p>
     <% if @current_room %>
-      <%= image_tag @current_room.send("#{@player.direction}_image"), alt: "Room facing #{@player.direction}" %>
+      <%= image_tag @current_room.send("#{@player.direction}_image"), alt: "Room facing #{@player.direction}", style: "image-rendering: pixelated;" %>
     <% else %>
       <p>No room found!</p>
     <% end %>
