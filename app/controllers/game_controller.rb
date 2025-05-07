@@ -1,6 +1,6 @@
 class GameController < ApplicationController
   def index
-    @player = Player.first_or_create(x: 1, y: 1, direction: 'north')
+    @player = Player.first_or_create(x: 2, y: 3, direction: 'west')
 
     room_id = Player::DUNGEON_LAYOUT[@player.y][@player.x]
     
