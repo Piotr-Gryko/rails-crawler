@@ -12,17 +12,30 @@
       <p>No room found!</p>
     <% end %>
 
-    <div>
-        <form action="/move" method="post">
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-            <button type="submit" name="direction" value="forward">Move Forward</button>
-            <button type="submit" name="direction" value="backward">Move Backward</button>
-        </form>
-        <form action="/turn" method="post">
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-            <button type="submit" name="direction" value="left">Turn Left</button>
-            <button type="submit" name="direction" value="right">Turn Right</button>   
-        </form>
+    <div style="margin: 0 auto; display: grid; width: 25%; grid-template-areas: 
+        'turn-left move-forward turn-right'
+        '. move-backward .';
+        gap: 1rem; justify-items: center; align-items: center;">
+      
+      <form action="/turn" method="post" style="grid-area: turn-left;">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <button type="submit" name="direction" value="left">Turn Left</button>
+      </form>
+
+      <form action="/move" method="post" style="grid-area: move-forward;">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <button type="submit" name="direction" value="forward">Move Forward</button>
+      </form>
+
+      <form action="/turn" method="post" style="grid-area: turn-right;">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <button type="submit" name="direction" value="right">Turn Right</button>
+      </form>
+
+      <form action="/move" method="post" style="grid-area: move-backward;">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <button type="submit" name="direction" value="backward">Move Backward</button>
+      </form>
     </div>
   </div>
 <% else %>
