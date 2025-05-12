@@ -1,26 +1,32 @@
 class GameController < ApplicationController
   def index
-    @player = Player.first_or_create(x: 2, y: 3, direction: 'west')
+    @player = Player.first_or_create(x: 1, y: 2, direction: "west")
 
-    room_id = Player::DUNGEON_LAYOUT[@player.y][@player.x]
-    
-    if room_id > 0
-      @current_room = Room.find_by(id: room_id)
-    else
-      @current_room = nil # No room exists at this position
-    end
+    @current_room = DungeonLayout.room_at(@player.x, @player.y)
   end
-
   def move
     @player = Player.first
-    if params[:direction] == 'forward'
-      @player.move_forward
-    elsif params[:direction] == 'backward'
-      @player.move_backward
+
+    # Find the current room based on player position
+    @current_room = DungeonLayout.room_at(@player.x, @player.y)
+
+    # Check if the player can move in the specified direction
+    if @current_room
+      if params[:direction] == 'forward' && @current_room.possible_moves.include?(@player.direction)
+        @player.move_forward
+      elsif params[:direction] == 'backward' && @current_room.possible_moves.include?(@player.opposite_direction)
+        @player.move_backward
+      else
+        flash[:error] = "You can't move in that direction from here!"
+      end
+    else
+      flash[:error] = "No room at this location!"
     end
+
     @player.save
     redirect_to root_path
   end
+
 
   def turn
     @player = Player.first
@@ -32,4 +38,5 @@ class GameController < ApplicationController
     @player.save
     redirect_to root_path
   end
+
 end

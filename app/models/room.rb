@@ -1,8 +1,15 @@
 class Room < ApplicationRecord
-  validates :x, :y, :north_image, :south_image, :east_image, :west_image, presence: true
+  validates :x, :y, presence: true
 
-  # Assuming you have attributes like 'north_image', 'south_image', etc.
-  # These should return the image filenames (e.g., 'north_0_1.jpg')
+  def possible_moves
+    YAML.load(self[:possible_moves]) || []
+  rescue Psych::SyntaxError, TypeError
+    []
+  end
+
+  def possible_moves=(value)
+    self[:possible_moves] = value.to_yaml
+  end
 
   def north_image
     "#{self.id}_north.png"

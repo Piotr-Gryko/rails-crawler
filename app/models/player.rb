@@ -1,15 +1,16 @@
 class Player < ApplicationRecord
   validates :x, :y, :direction, presence: true
 
-  DUNGEON_LAYOUT = [
-  [0, 0, 0, 0, 0],
-  [0, 6, 5, 0, 0],
-  [0, 4, 3, 0, 0],
-  [0, 2, 1, 0, 0],
-  [0, 0, 0, 0, 0]
-].freeze
-
   DIRECTIONS = %w[north east south west].freeze
+
+  def opposite_direction
+    case direction
+    when 'north' then 'south'
+    when 'south' then 'north'
+    when 'east'  then 'west'
+    when 'west'  then 'east'
+    end
+  end
 
   def turn_left
     self.direction = DIRECTIONS[(DIRECTIONS.index(direction) - 1) % DIRECTIONS.size]
@@ -20,34 +21,36 @@ class Player < ApplicationRecord
   end
 
   def move_forward
-    dx, dy = movement_delta
-    new_x = x + dx
-    new_y = y + dy
-  
-    puts "Current position: x=#{x}, y=#{y}, facing #{direction}"
-    puts "Attempting move to: x=#{new_x}, y=#{new_y}"
-  
-    if valid_move?(new_x, new_y)
+    return puts "No current room!" unless current_room
+
+    if current_room.possible_moves.include?(direction)
+      dx, dy = movement_delta
+      new_x = x + dx
+      new_y = y + dy
+
       self.x = new_x
       self.y = new_y
       save
-      puts "Move successful: x=#{x}, y=#{y}"
+      puts "Moved forward to x=#{x}, y=#{y}, facing #{direction}"
     else
-      puts "You can't move there!"
+      puts "You can't move #{direction} from here!"
     end
   end
 
   def move_backward
-    dx, dy = movement_delta
-    new_x = x - dx
-    new_y = y - dy
-  
-    if valid_move?(new_x, new_y)
+    return puts "No current room!" unless current_room
+
+    if current_room.possible_moves.include?(opposite_direction)
+      dx, dy = movement_delta
+      new_x = x - dx
+      new_y = y - dy
+
       self.x = new_x
       self.y = new_y
       save
+      puts "Moved backward to x=#{x}, y=#{y}, facing #{direction}"
     else
-      puts "You can't move there!"
+      puts "You can't move backward from here!"
     end
   end
 
