@@ -7,7 +7,23 @@
     <% if @current_room %>
       <p>Player is in room <%= @current_room.id %></p>
       <p>The image should be <%= "#{@player.direction}_image" %></p>
-      <%= image_tag @current_room.send("#{@player.direction}_image"), alt: "Room facing #{@player.direction}", style: "image-rendering: pixelated;" %>
+
+      <!-- Room image with relative positioning -->
+      <div style="position: relative;">
+        <%= image_tag @current_room.send("#{@player.direction}_image"), alt: "Room facing #{@player.direction}", style: "image-rendering: pixelated;" %>
+
+        <!-- Render each enemy as a red box centered over the image -->
+        <% @enemies.each do |enemy| %>
+          <div style="position: absolute; 
+                      top: 0; 
+                      left: 50%;
+                      transform: translateX(-50%);">
+
+            <%= image_tag asset_path("enemies/#{enemy.name}.png"), alt: enemy.name, style: "image-rendering: pixelated;" %>
+          </div>
+        <% end %>
+      </div>
+
     <% else %>
       <p>No room at this location!</p>
     <% end %>

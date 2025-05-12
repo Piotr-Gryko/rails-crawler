@@ -1,8 +1,8 @@
 class GameController < ApplicationController
   def index
     @player = Player.first_or_create(x: 1, y: 2, direction: "west")
-
     @current_room = DungeonLayout.room_at(@player.x, @player.y)
+    @enemies = Enemy.where(x: @player.x, y: @player.y) # Get enemies in the same room
   end
   def move
     @player = Player.first
