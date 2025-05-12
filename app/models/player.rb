@@ -61,16 +61,10 @@ class Player < ApplicationRecord
   end
 
   def valid_move?(new_x, new_y)
-    # Check bounds of the array
-    return false if new_y < 0 || new_y >= DUNGEON_LAYOUT.size
-    return false if new_x < 0 || new_x >= DUNGEON_LAYOUT.first.size
-  
-    # Check if the target cell is walkable (not 0)
-    DUNGEON_LAYOUT[new_y][new_x] != 0
+    Room.exists?(x: new_x, y: new_y)
   end
 
   def current_room
-    room_id = DUNGEON_LAYOUT[y][x]
-    Room.find_by(id: room_id) if room_id != 0
+    Room.find_by(x: x, y: y)
   end
 end

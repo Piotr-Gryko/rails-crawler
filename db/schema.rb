@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_05_222517) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_12_115044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,10 +25,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_222517) do
   create_table "rooms", force: :cascade do |t|
     t.integer "x"
     t.integer "y"
-    t.string "north_image"
-    t.string "south_image"
-    t.string "east_image"
-    t.string "west_image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
