@@ -12,13 +12,22 @@
       <div style="position: relative;">
         <%= image_tag @current_room.send("#{@player.direction}_image"), alt: "Room facing #{@player.direction}", style: "image-rendering: pixelated;" %>
 
+        <% if @next_enemy %>
+          <div style="position: absolute; 
+                      top: 0; 
+                      left: 50%;
+                      transform: translateX(-50%);">
+            <%= image_tag asset_path("enemies/#{@next_enemy.name}_far.png"), alt: @next_enemy.name, style: "image-rendering: pixelated;" %>
+          </div>
+          
+        <% end %>
         <!-- Render each enemy as a red box centered over the image -->
         <% @enemies.each do |enemy| %>
           <div style="position: absolute; 
                       top: 0; 
                       left: 50%;
                       transform: translateX(-50%);">
-
+  
             <%= image_tag asset_path("enemies/#{enemy.name}.png"), alt: enemy.name, style: "image-rendering: pixelated;" %>
           </div>
         <% end %>

@@ -3,6 +3,7 @@ class GameController < ApplicationController
     @player = Player.first_or_create(x: 1, y: 2, direction: "west")
     @current_room = DungeonLayout.room_at(@player.x, @player.y)
     @enemies = Enemy.where(x: @player.x, y: @player.y) # Get enemies in the same room
+    @next_enemy = Enemy.next_enemy_for(@player)
   end
   def move
     @player = Player.first
